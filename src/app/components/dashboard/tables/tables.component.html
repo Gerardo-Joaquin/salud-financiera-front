@@ -1,0 +1,167 @@
+<div class="container-fluid p-4">
+    <div class="row card-custom">
+        <div class="col-12" style="margin-bottom: 2px;">
+            <div class="header">
+                <h4 class="title" style="font-weight: bold;">
+                    INFORMACIÓN EN BRUTO
+                </h4>
+                <p class="category">
+                    Aquí encontraras toda la información en bruto que el sistema recolecta
+                </p>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">
+                        Usuarios
+                    </h4>
+                    <p class="category">
+                        Información en bruto de los usuarios que usaron el avatar
+                    </p>
+                </div>
+                <div class="content">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Identificador</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Correo</th>
+                                <th scope="col">Acepta correos</th>
+                                <th scope="col">Ciudad</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Papá primerizo</th>
+                                <th scope="col">No. de hijos</th>
+                                <th scope="col">Fecha de nacimiento</th>
+                                <th scope="col">Genero</th>
+                                <th scope="col">Etapa de su bebé</th>
+                                <th scope="col">Peso de su bebé</th>
+                                <th scope="col">Tipo de pañal del bebé</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of userParentInfo">
+                                <th scope="row">{{item.IDUser}}</th>
+                                <td>{{item.Ciudad}}</td>
+                                <td>{{item.Nombre}}</td>
+                                <td>{{item.AceptaCorreos == 1 ? 'Si': 'No' }}</td>
+                                <td>{{item.Correo}}</td>
+                                <td>{{item.Estado}}</td>
+                                <td>{{item.Primerizo}}</td>
+                                <td>{{item.NoBebes}}</td>
+                                <td>{{item.Edad | date}}</td>
+                                <td>{{item.Genero == 'm' ? 'Masculino': 'Femenino' }}</td>
+                                <td>{{item.TipoEtapaBebe | uppercase}}</td>
+                                <td>{{item.PesoBebe}} kg</td>
+                                <td>{{item.TipoPanial}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <nav class="mt-2">
+                        <ul class="pagination justify-content-end">
+                            <li (click)="exportData('info')" class="page-item mx-2">
+                                <span class="page-link"> <i class="bi bi-box-arrow-down"></i> descargar </span>
+                            </li>
+                            <li (click)="previousPage('info')" class="page-item mx-2"
+                                [ngClass]="{'disabled': skipUserParentInfo == 0}">
+                                <span class="page-link"> <i class="bi bi-arrow-left"></i> atrás </span>
+                            </li>
+                            <li (click)="nextPage('info')" class="page-item"
+                                [ngClass]="{'disabled': totalCountUserParentInfo < limitUserParentInfo}">
+                                <a class="page-link"> siguiente <i class="bi bi-arrow-right"></i></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 mt-3">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">
+                        Preguntas de los usuarios
+                    </h4>
+                    <p class="category">
+                        Preguntas que realizan los usuarios con las respuestas que genera el avatar
+                    </p>
+                </div>
+                <div class="content">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Identificador</th>
+                                <th scope="col">Pregunta</th>
+                                <th scope="col">Respuesta</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of userParentQuestions">
+                                <th scope="row">{{item.IDUser}}</th>
+                                <td class="wide-column">{{item.Pregunta}}</td>
+                                <td>
+                                    <div class="response">{{item.Respuesta}}</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <nav class="mt-2">
+                        <ul class="pagination justify-content-end">
+                            <li class="page-item mx-2" (click)="exportData('questions')">
+                                <span class="page-link"> <i class="bi bi-box-arrow-down"></i> descargar </span>
+                            </li>
+                            <li (click)="previousPage('question')" class="page-item mx-2"
+                                [ngClass]="{'disabled': skipUserParentQuestions== 0}">
+                                <span class="page-link"> <i class="bi bi-arrow-left"></i> atrás </span>
+                            </li>
+                            <li (click)="nextPage('question')" class="page-item"
+                                [ngClass]="{'disabled': totalCountUserParentQuestions < limitUserParentQuestions}">
+                                <a class="page-link"> siguiente <i class="bi bi-arrow-right"></i></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 mt-3">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">
+                        Feedback de usuarios
+                    </h4>
+                    <p class="category">
+                        Información en bruto de todo el feedback de usuarios
+                    </p>
+                </div>
+                <div class="content" style="overflow-y: scroll; height: 300px;">
+                    <div class="table-full-width">
+                        <table class="table">
+                            <thead style="position: sticky; top: 0; background: white;">
+                                <th>Comentario</th>
+                                <th>Calificación</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let comment of feedbackUsers">
+                                    <td>{{comment.Comentario}}</td>
+                                    <td class="d-flex justify-content-center align-items-center">
+                                        <div class="star" *ngFor="let _ of [].constructor(5); let i = index">
+                                            <i class="bi"
+                                                [ngClass]="{'bi-star-fill': i < comment.Tipo, 'bi-star': i >= comment.Tipo}"></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="footer mt-2">
+                    <nav class="mt-2">
+                        <ul class="pagination justify-content-end">
+                            <li class="page-item mx-2" (click)="exportData('feedback')">
+                                <span class="page-link"> <i class="bi bi-box-arrow-down"></i> descargar </span>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>

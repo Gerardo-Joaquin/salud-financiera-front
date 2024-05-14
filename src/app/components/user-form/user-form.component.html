@@ -1,0 +1,182 @@
+<div class="container-fluid p-5">
+    <div class="row justify-content-center align-items-center card-form">
+        <div class="col-12 d-flex justify-content-center align-items-center mb-2">
+            <img src="assets/bbtips-logo.webp" alt="" width="100px">
+        </div>
+        <form [formGroup]="form">
+            <div class="col-12 mb-2">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h2>Queremos saber más de ti y de tu bebé para poder brindarles el mejor apoyo, ¡gracias!</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                            <label class="form-label" for="">1.- Género</label>
+                            <select formControlName="genere" class="form-select">
+                                <option value="m">Femenino</option>
+                                <option value="h">Masculino</option>
+                                <option value="o">Otro</option>
+                                <option value="n">Prefiero no decir</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                            <label class="form-label" for="">2.- Fecha de nacimiento</label>
+                            <input formControlName="birthday" class="form-control" type="date">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                            <label class="form-label" for="">3.- Estado</label>
+                            <input type="text" formControlName="state" class="form-control"
+                                *ngIf="permissionGeolocalization">
+                            <select *ngIf="!permissionGeolocalization" (change)="onChangeState($event)"
+                                class="form-select" formControlName="state">
+                                <option [value]="item.state" *ngFor="let item of statesArray">
+                                    {{item.state}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                            <label class="form-label" for="">4.- Ciudad</label>
+                            <input *ngIf="permissionGeolocalization" type="text" class="form-control"
+                                formControlName="city">
+                            <select formControlName="city" *ngIf="!permissionGeolocalization" class="form-select">
+                                <option [value]="item" *ngFor="let item of citiesStateSelected">
+                                    {{item}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                            <label class="form-label" for="">5.- ¿Cuántos hijos tienes?</label>
+                            <select (change)="onFirstChange($event)" formControlName="babycount" class="form-select">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4 o más</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                            <label class="form-label" for="">6.- ¿Cuánto pesa tu bebé? (Kg)</label>
+                            <input formControlName="babyweight" type="number" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                            <label class="form-label" for="">7.- ¿Qué etapa de pañal usa tu bebé?</label>
+                            <select formControlName="babystage" class="form-select">
+                                <option [value]="item.stage" *ngFor="let item of babystages">
+                                    {{item.stage | uppercase}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                            <label class="form-label" for="">8.- ¿Qué tipo de pañal usa tu bebé?</label>
+                            <select formControlName="babyclothe" name="" id="" class="form-select">
+                                <option value="Pañal abierto">Pañal abierto</option>
+                                <option value="Pañal autoajustable">Pañal autoajustable</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </form>
+        <form [formGroup]="formFeedback">
+            <div class="col-12 mt-4 mb-2">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h2>¡Tu opinión es importante para nosotros!</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                            <label class="form-label" for="">9.- Nombre</label>
+                            <input type="text" (change)="onFirstChange($event)" formControlName="name"
+                                class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                            <label class="form-label" for="">10.- Correo electrónico</label>
+                            <input formControlName="email" type="email" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-12 col-lg-4">
+                        <div class="form-group text-center">
+                            <label class="form-label text-center" for="">11.- ¿Cómo te sentiste al utilizar el
+                                avatar Eva?</label>
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="star" *ngFor="let _ of [].constructor(5); let i = index">
+                                    <i class="bi" [ngClass]="{'bi-star-fill': i < rating, 'bi-star': i >= rating}"
+                                        (click)="rate(i + 1)"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                            <label class="form-label" for="">12.- ¿Tienes algún comentario adicional?</label>
+                            <textarea formControlName="feedback" placeholder="cuéntanos tu opinión" class="form-control"
+                                name="" id="" style="max-height: 200px;"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-2">
+                <div class="row justify-content-center align-items-start">
+                    <div class="col-12 col-lg-4 d-flex align-items-center justify-content-center flex-column">
+                        <button type="button" (click)="saveForm()"
+                            class="btn btn-custom mt-3 d-flex justify-content-center align-items-center">
+                            Enviar información
+                        </button>
+                        <div class="form-check text-center mt-2">
+                            <input class="form-check-input" type="checkbox" formControlName="acceptEmails" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                              ¿Aceptas recibir información de la marca por correo electrónico?
+                            </label>
+                          </div>
+                        <span class="text-span">Al enviar la información, confirmas que estás de acuerdo con las
+                            políticas de privacidad de la marca, las cuales puedes consultar en: </span>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

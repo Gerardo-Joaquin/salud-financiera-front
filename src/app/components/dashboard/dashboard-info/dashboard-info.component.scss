@@ -1,0 +1,53 @@
+
+@import "../../../../styles.scss";
+.title-chart-card {
+    font-size: 20px;
+    font-weight: 300;
+    padding: 10px;
+}
+
+.card-custom {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: white;
+    border: 1px solid rgb(223, 223, 223);
+    border-radius: 10px;
+    margin-bottom: 20px;
+
+}
+
+.title {
+    font-weight: 300;
+    letter-spacing: 2px;
+
+}
+
+.category {
+    font-weight: 300;
+    color: gray;
+}
+
+.card {
+    border: 1px solid rgb(223, 223, 223);
+    padding: 20px;
+}
+
+
+.star {
+    font-size: 20px;
+    color: $primary-color;
+    margin-left: 3px;
+  }
+  
+  .star:hover {
+    color: $primary-dark-color;
+  }
+
+  .custom-control-label:before{
+    background-color:$primary-color;
+  }
+  .custom-checkbox .custom-control-input:checked~.custom-control-label::before{
+    background-color: $primary-dark-color;
+  }

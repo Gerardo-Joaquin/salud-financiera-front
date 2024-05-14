@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="col-12 img">
+                    <img src="assets/bbtips-logo.webp" alt="">
+                </div>
+                <div class="card-header color-primary text-white mt-3">
+                    <h4 class="text-center p-0 m-0">Inicio de Sesión</h4>
+                </div>
+                <div class="card-body mt-3 p-0">
+                    <form [formGroup]="authForm" class="row">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Correo Electrónico</label>
+                            <input formControlName="mail" type="email" class="form-control" id="exampleInputEmail1"
+                                aria-describedby="emailHelp" placeholder="Ingresa tu correo electrónico">
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="exampleInputPassword1">Contraseña</label>
+                            <input formControlName="pass" type="password" class="form-control"
+                                id="exampleInputPassword1" placeholder="Contraseña">
+                        </div>
+                        <button [disabled]="loading" type="button" (click)="authenticate()" class="btn btn-custom btn-block mt-3">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Iniciar
+                            Sesión
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

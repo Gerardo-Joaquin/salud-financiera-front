@@ -1,0 +1,179 @@
+<div class="container-fluid p-4">
+    <div class="row card-custom">
+        <div class="col-12" style="margin-bottom: 2px;">
+            <div class="header">
+                <h4 class="title" style="font-weight: bold;">
+                    PAPÁS
+                </h4>
+                <p class="category">
+                    Información sobre los papás o usuarios, separado por genero, edad y localización
+                </p>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">
+                        Ciudad y estado
+                    </h4>
+                    <p class="category">
+                        Gráfico de papás por ciudad y estado
+                    </p>
+                    <div class="form-group">
+                        <label class="form-label">Estado</label>
+                        <select class="form-select" [(ngModel)]="stateSelected" (change)="onStateChange($event)">
+                            <option [value]="item.state" *ngFor="let item of states">{{item.state}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="content">
+                    <canvas baseChart [data]="dataState" [options]="barChartOptions" [type]="'bar'"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">
+                        Edad
+                    </h4>
+                    <p class="category">
+                        Gráfico de usuarios por rango de edad, separados por genero
+                    </p>
+                </div>
+                <div class="content">
+                    <canvas baseChart [data]="dataGenereAge" [options]="barChartOptions" [type]="'bar'"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 mt-3">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">
+                        Genero
+                    </h4>
+                    <p class="category">
+                        Gráfico de usuarios que han usado el avatar por su genero
+                    </p>
+                </div>
+                <div class="content">
+                    <canvas baseChart class="chart" [data]="lineDateGenderData" [options]="lineChartOptions"
+                        [type]="'line'"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row card-custom">
+        <div class="col-12" style="margin-bottom: 2px;">
+            <div class="header">
+                <h4 class="title" style="font-weight: bold;">
+                    BEBÉS
+                </h4>
+                <p class="category">
+                    Información sobre los bebés, etapa, peso promedio, tipo de pañal que más usan.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">
+                        Peso promedio de los bebés
+                    </h4>
+                    <p class="category">Gráfica de peso promedio de los bebés</p>
+
+                    <div class="content">
+                        <canvas baseChart [data]="barWeightData" [options]="barChartOptions" [type]="'bar'"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Tipos de pañales </h4>
+                            <p class="category">Gráfica que muestra el tipo de panal mas usado</p>
+                        </div>
+                        <div class="content">
+                            <canvas style="padding: 20px;" baseChart class="chart" [data]="piePanialData" [type]="'pie'"
+                                [options]="pieChartOptions">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-6 mt-2">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Etapas de los bebes</h4>
+                    <p class="category">Muestra las etapas de los bebes mas comunes registradas por los papás</p>
+                </div>
+                <div class="content">
+                    <canvas style="padding: 20px;" baseChart class="chart" [data]="piePrimericeData" [type]="'pie'"
+                        [options]="pieChartOptions">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row card-custom">
+        <div class="col-12" style="margin-bottom: 2px;">
+            <div class="header">
+                <h4 class="title" style="font-weight: bold;">
+                    FEEDBACK
+                </h4>
+                <p class="category">
+                    Feedback del usuario final, sobre el uso del avatar
+                </p>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Comentarios</h4>
+                    <p class="category">Comentarios de los usuarios en relación al servicio del avatar Eva</p>
+                </div>
+                <div class="content" style="overflow-y: scroll; height: 300px;">
+                    <div class="table-full-width">
+                        <table class="table">
+                            <thead style="position: sticky; top: 0; background: white;">
+                                <th>Comentario</th>
+                                <th>Calificación</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let comment of commentsUsers">
+                                    <td>{{comment.Comentario}}</td>
+                                    <td class="d-flex justify-content-center align-items-center">
+                                        <div class="star" *ngFor="let _ of [].constructor(5); let i = index">
+                                            <i class="bi"
+                                                [ngClass]="{'bi-star-fill': i < comment.Tipo, 'bi-star': i >= comment.Tipo}"></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Tipo de respuestas</h4>
+                    <p class="category">Respuestas positivas, negativas</p>
+                </div>
+                <div class="content">
+                    <canvas style="padding: 20px;" baseChart class="chart" [data]="pieChartData" [type]="'pie'"
+                        [options]="pieChartOptions">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

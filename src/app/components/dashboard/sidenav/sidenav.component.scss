@@ -1,0 +1,57 @@
+@import '../../../../styles.scss';
+
+.row {
+    background: linear-gradient($primary-color, $primary-dark-color);
+    height: 100vh;
+    color: white;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.separator {
+    width: 100%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.438);
+    margin-top: 18px;
+}
+
+.active {
+    background: rgba(5, 5, 5, 0.151);
+}
+
+.secction {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 50px 10px 30px;
+    border-radius: 10px;
+    transition: all 0.5s ease;
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+    &:hover {
+        background: rgba(5, 5, 5, 0.151);
+    }
+
+    p {
+        font-size: 18px;
+        margin: 0;
+    }
+
+    i {
+        font-size: 21px;
+    }
+}
+
+.btn-close-custom {
+    background: transparent;
+    border: 1px solid white;
+    color: white;
+    &:hover {
+        background: white;
+        color: black;
+    }
+}

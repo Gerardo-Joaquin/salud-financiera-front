@@ -1,0 +1,52 @@
+@import '../../../styles.scss';
+
+.home {
+    background: rgb(241, 241, 241);
+    width: calc(100% - 260px);
+    height: 100vh;
+    margin-left: 260px;
+    padding: 0;
+    overflow: auto;
+}
+
+.nav-info {
+    position: absolute;
+    top: 0;
+    width: 260px;
+    left: 0;
+    height: 100vh;
+    transition: left 0.5s ease-out;
+}
+
+.open-menu {
+    left: 0px;
+}
+
+@media (max-width: 768px) {
+    .nav-info:not(.open-menu) {
+        left: -260px; /* Oculta el menú cuando la pantalla sea igual o menor a 768px, excepto cuando se aplica la clase 'open-menu' */
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* Media Query para tamaños de pantalla medianos */
+    .home {
+        width: 100%;
+        /* Establece el ancho al 100% cuando el tamaño de la pantalla es md */
+        margin-left: 0;
+        /* Reinicia el margen izquierdo */
+    }
+}
+
+
+.menu {
+    position: fixed;
+
+    i {
+        cursor: pointer;
+
+        font-size: 40px;
+        color: $text-color;
+    }
+}

@@ -1,0 +1,40 @@
+@import "../../../styles.scss";
+
+.btn-custom {
+    background: transparent;
+    border: 2px solid $primary-color ;
+    color: $primary-color;
+    font-weight: bold;
+
+    &:active {
+        background: $primary-color;
+        color: white;
+    }
+}
+h2 {
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: rgb(150, 150, 150);
+}
+
+.card-form {
+    border: 1px solid $primary-color;
+    padding: 50px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.form-control {
+    background: $primary-color;
+    color: white;
+    
+}
+textarea::placeholder {
+    color: white;
+}
+.text-span {
+    margin-top: 5px;
+    text-align: center;
+    color: rgb(163, 163, 163);
+    letter-spacing: 2px;
+}

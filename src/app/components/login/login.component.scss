@@ -1,0 +1,35 @@
+@import "../../../styles.scss";
+
+.container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f9fa;
+  }
+  
+  .card {
+    padding: 30px;
+    width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  .img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .color-primary {
+    background: $primary-color
+  }
+ 
+.btn-custom {
+  background: transparent;
+  border: 2px solid $primary-color ;
+  color: $primary-color;
+  font-weight: bold;
+  &:active {
+    background: $primary-color;
+    color: white;
+  }
+}
