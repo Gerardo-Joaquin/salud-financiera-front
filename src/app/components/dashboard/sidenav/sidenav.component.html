@@ -1,22 +1,31 @@
-<div class="row align-items-start justify-content-end">
+<div class="row align-items-start justify-content-end" [ngClass]="{'close': !isOpen}">
     <div class="col-12 h-100 mt-4 logos d-flex align-items-center justify-content-start flex-column">
         <!-- <img src="assets/images/logo-brita.png" width="100px" alt=""> -->
-        <div class="d-flex align-items-center justify-content-start w-100 px-2">
-            <img src="assets/bbtips-logo.webp" width="30px" alt="">
-            <h5 class="m-0 mx-2 p-0">EVA</h5>
+        <div class=" title d-flex align-items-center justify-content-start w-100 px-2">
+            <h4 class="m-0 mx-2 p-0">Análisis de salud financiera</h4>
+            <!-- <div class="menu" (click)="openNav()"><i class="bi bi-list"></i></div> -->
         </div>
         <div class="separator"></div>
-        <div class="d-flex h-100 flex-column justify-content-between align-items-center">
-            <div class="seccions mt-4">
-                <a (click)="changeRoute(section.title)" class="secction mt-2" [ngClass]="{'active': section.title.toLowerCase() == dashboardService.getActualRoute()}"
+        <div class="d-flex h-100 flex-column justify-content-between align-items-center w-100">
+            <div class="seccions mt-4 w-100">
+                <!-- <h4 class="text-start">Sube un archivo</h4> -->
+                <div class="mb-3 w-100">
+                    <button (click)="openChargeFile()" type="button" class="btn btn-outline-primary btn-sm w-100"
+                        style="color: white; border: 1px solid white;">{{emptyData ? 'Cargar archivo': 'Nuevo archivo'}}</button>
+                </div>
+                <input type="file" class="d-none" id="file_charge" accept=".xlsx, .xls, .xlsm"
+                    (change)="onFileChange($event)">
+                <a (click)="changeRoute(section.router)" class="secction mt-2 active"
+                    [ngClass]="{'active': section.router.toLowerCase() == dashboardService.getActualRoute()}"
                     *ngFor="let section of sections">
                     <i class="bi {{section.icon}} mx-3"></i>
                     <p>{{section.title}}</p>
                 </a>
             </div>
-            <div class="close pb-5 w-100">
-                <button (click)="closeSession()" class="btn btn-close-custom w-100">Cerrar sesión <i class="bi bi-x-circle px-2"></i></button>
-            </div>
+            <!-- <div class="close pb-5 w-100">
+                <button (click)="closeSession()" class="btn btn-close-custom w-100">Cerrar sesión <i
+                        class="bi bi-x-circle px-2"></i></button>
+            </div> -->
         </div>
     </div>
 </div>

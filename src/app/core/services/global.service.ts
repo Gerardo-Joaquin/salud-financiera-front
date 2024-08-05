@@ -4,8 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class GlobalService {
-  // ENDPOINT = 'https://bbtips.link'
-  ENDPOINT = 'http://localhost:8000'
+  ENDPOINT = '/api'
 
   constructor() { }
 }

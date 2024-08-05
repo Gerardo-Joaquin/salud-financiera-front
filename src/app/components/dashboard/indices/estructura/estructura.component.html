@@ -1,0 +1,66 @@
+<div class="row justify-content-center">
+    <div class="col-12 col-xxl-8 mt-3">
+        <div class="card">
+            <div class="header">
+                <h4 class="title">
+                    Indices de estructura o apalancamiento
+                </h4>
+                <p class="category">
+                    Muestra información sobre los indices de estructura
+                </p>
+            </div>
+            <div class="content">
+                <canvas baseChart [datasets]="barChartAllData"
+                    [labels]="barChartAllLabels" [options]="barChartOptions" [legend]="true" [type]="'bar'">
+                </canvas>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="col-4 conclusion p-5">
+        <div class="header w-100">
+            <h3>Comentarios</h3>
+            <div class="coment mt-3" style="border-bottom: 1px solid rgba(128, 128, 128, 0.219);">
+                <div class="user">
+                    <div class="user-image">G</div>
+                    <span class="user-name d-flex flex-column">
+                        <span class="d-flex align-items-center">Gerardo <span class="text-muted mx-2"
+                                style="font-size: 10px;">04/07/2024</span></span>
+                        <span class="mt-1">Esta gráfica marca una tendencia </span>
+                    </span>
+                </div>
+            </div>
+            <div class="coment mt-3" style="border-bottom: 1px solid rgba(128, 128, 128, 0.219);">
+                <div class="user">
+                    <div class="user-image">A</div>
+                    <span class="user-name d-flex flex-column">
+                        <span class="d-flex align-items-center">Alonso <span class="text-muted mx-2"
+                                style="font-size: 10px;">04/07/2024</span></span>
+                        <span class="mt-1">Esta gráfica es buena </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="comment-input w-100">
+            <input type="text" class="form-control" placeholder="Escribe un comentario">
+            <i class="bi bi-chat-left-text"></i>
+        </div>
+    </div> -->
+</div>
+<div class="col-12 mt-3">
+    <div class="table-container">
+        <table class="dupont-table">
+            <thead>
+                <tr>
+                    <th rowspan="2">ESTRUCTURA</th>
+                    <th *ngFor="let header of data.headers">{{ header }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of data.rows" (click)="selectIndice(row)">
+                    <td>{{ row.name }}</td>
+                    <td *ngFor="let value of row.values">{{ value }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

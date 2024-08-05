@@ -1,14 +1,16 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="nav-info" [ngClass]="{'open-menu': menuOpen}" style="z-index: 100;">
-            <app-sidenav></app-sidenav>
-        </div>
-        <div class="menu d-block d-md-none" style="z-index: 10000;">
-            <i (click)="open()" class="bi bi-list"></i>
+        <div class="nav-info" style="z-index: 100;">
+            <app-sidenav (open)="open($event)"></app-sidenav>
         </div>
         <div class="col-12 home">
-            <app-dashboard-info *ngIf="dashboardService.getActualRoute() == 'dashboard'"></app-dashboard-info>
-            <app-tables *ngIf="dashboardService.getActualRoute() == 'datos'"></app-tables>
+            <app-dashboard-info *ngIf="dashboardService.getActualRoute() == 'estados-financieros'"></app-dashboard-info>
+            <app-indices *ngIf="dashboardService.getActualRoute() == 'indices'"></app-indices>
+            <app-user-form *ngIf="dashboardService.getActualRoute() == 'empresas'"></app-user-form>
+            <app-projections *ngIf="dashboardService.getActualRoute() == 'proyecciones'"></app-projections>
+            <app-vertical *ngIf="dashboardService.getActualRoute() == 'vertical'"></app-vertical>
+            <app-horizontal *ngIf="dashboardService.getActualRoute() == 'horizontal'"></app-horizontal>
+            <app-not-found *ngIf="dashboardService.getActualRoute() == 'not-found'"></app-not-found>
         </div>
     </div>
 </div>

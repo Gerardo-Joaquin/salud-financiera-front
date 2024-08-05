@@ -7,22 +7,89 @@ import { forkJoin } from 'rxjs';
 import { LoadingService } from '../../../core/services/loading.service';
 import { states } from '../../../utils/states';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-dashboard-info',
   standalone: true,
-  imports: [CommonModule, BaseChartDirective, FormsModule],
+  imports: [CommonModule, BaseChartDirective, FormsModule, NgbModule],
   templateUrl: './dashboard-info.component.html',
   styleUrl: './dashboard-info.component.scss'
 })
 export class DashboardInfoComponent {
 
+  public barChartLabels!: any
+  public barChartType = 'bar';
+  public barChartLegend = true;
+
+
+  positiveColor = '#2fbee1'
+  negativeColor = '#f44336'
+
+  ventas = [102040, 112040, 105510, 112505];
+  pasivoCirculante = [52040, 55210, 59011, 61028];
+  activoCirculante = [80000, 85000, 82000, 90000];
+  utilidadBruta = [30000, 35000, 32000, 40000];
+  sumaVentas = this.ventas.reduce((total, valor) => total + valor, 0)
+  sumaPasivo = this.pasivoCirculante.reduce((total, valor) => total + valor, 0)
+  sumaActivo = this.activoCirculante.reduce((total, valor) => total + valor, 0)
+  sumaUtilidadBruta = this.utilidadBruta.reduce((total, valor) => total + valor, 0)
+
+  //ventas
+  valorInicialVentas = this.ventas[0];
+  valorFinalVentas = this.ventas[this.ventas.length - 1];
+
+  incrementoTotalVentas = this.valorFinalVentas - this.valorInicialVentas;
+  incrementoPorcentualVentas = (this.incrementoTotalVentas / this.valorInicialVentas) * 100;
+  restanteVentas = 100 - parseInt(this.incrementoPorcentualVentas.toFixed(2))
+
+  // activos
+  valorInicialActivo = this.activoCirculante[0];
+  valorFinalActivo = this.activoCirculante[this.ventas.length - 1];
+
+  incrementoActivos = this.valorFinalActivo - this.valorInicialActivo;
+  incrementoPorcentualActivos = (this.incrementoActivos / this.valorInicialActivo) * 100;
+  restanteActivos = 100 - parseInt(this.incrementoPorcentualActivos.toFixed(2))
+  // pasivos
+  valorInicialPasivo = this.pasivoCirculante[0];
+  valorFinalPasivo = this.pasivoCirculante[this.ventas.length - 1];
+
+  incrementoPasivos = this.valorFinalPasivo - this.valorInicialPasivo;
+  incrementoPorcentualPasivos = (this.incrementoPasivos / this.valorInicialPasivo) * 100;
+  restantePasivos = 100 - parseInt(this.incrementoPorcentualPasivos.toFixed(2))
+  // bruta
+  valorInicialBruta = this.utilidadBruta[0];
+  valorFinalBruta = this.utilidadBruta[this.ventas.length - 1];
+
+  incrementoBruta = this.valorFinalBruta - this.valorInicialBruta;
+  incrementoPorcentualBruta = (this.incrementoBruta / this.valorInicialBruta) * 100;
+  restanteBruta = 100 - parseInt(this.incrementoPorcentualBruta.toFixed(2))
+
+  dataVentas = this.incrementoTotalVentas
+  dataPasivoCirculante = this.incrementoPasivos
+  dataActivos = this.incrementoActivos
+  dataUtilidad = this.incrementoBruta
+
+  public barChartData!: any[];
+
+  public lineChartData!: any[];
+
   public barChartOptions: ChartConfiguration['options'] = {
-    // We use these empty structures as placeholders for dynamic theming.
+    backgroundColor: '#1382a756',
+    datasets: {
+      bar: {
+        borderRadius: 14
+      }
+    },
     scales: {
-      x: {},
+      x: {
+        grid: {
+          display: false
+        }
+      },
       y: {
         min: 0,
+        display: false,
       },
     },
     plugins: {
@@ -31,366 +98,170 @@ export class DashboardInfoComponent {
       },
     },
   };
-  public barWeightData!: ChartData<'bar'>
-
-  public dataGenereAge!: ChartData<'bar'>;
-
-  public dataState!: ChartData<'bar'>;
-
-  public pieChartOptions: ChartConfiguration['options'] = {
-    plugins: {
-      legend: {
-        display: true,
-        position: 'top',
-      },
-    },
-  };
-
-  public pieChartData: ChartData<'pie', number[], string | string[]> = {
-    labels: ['Positivas', 'Negativas'],
-    datasets: [
-      {
-        data: [120, 65],
-        backgroundColor: [
-          '#67A89B',
-          '#5877A2'
-        ]
-      },
-    ],
-  };
-  public piePrimericeData!: ChartData<'pie', number[], string | string[]>
-
-  public piePanialData!: ChartData<'pie', number[], string | string[]>
-
-  public lineDateGenderData!: ChartConfiguration['data'];
-
-  public lineChartOptions: any = {
-    elements: {
-      line: {
-        tension: 0.5,
-      },
-    },
+  public doughnutChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
     scales: {
-      // We use this empty structure as a placeholder for dynamic theming.
-      y: {
-        position: 'left',
-      },
-      y1: {
-        position: 'right',
-        grid: {
-          color: 'rgba(255,0,0,0.3)',
-        },
-        ticks: {
-          color: 'red',
-        },
-      },
-    },
 
+    },
     plugins: {
-      legend: { display: true },
-      annotation: {
-        annotations: [
-          {
-            type: 'line',
-            scaleID: 'x',
-            value: 'March',
-            borderColor: 'orange',
-            borderWidth: 2,
-            label: {
-              display: true,
-              position: 'center',
-              color: 'orange',
-              content: 'LineAnno',
-              font: {
-                weight: 'bold',
-              },
-            },
-          },
-        ],
+      legend: {
+        display: false
       },
-    },
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            return context.parsed + '%';
+          }
+        }
+      }
+    }
   };
+  public doughnutChartLabels: string[] = [
+    'Incremento',
+  ];
 
-  commentsUsers: any[] = []
-  allUsers: any[] = []
-  states: any[] = states
-  stateSelected = 'Ciudad de Mexico'
+  public doughnutChartDataVentas!: ChartData<'doughnut'>;
+  public doughnutChartDataActivo!: ChartData<'doughnut'>;
+  public doughnutChartDataPasivo!: ChartData<'doughnut'>;
+  public doughnutChartDataBruto!: ChartData<'doughnut'>;
+
+  years: string[] = []
+  selectedYear = 'all'
+  allData: any;
+
   constructor(
     private dashboard: DashboardService,
     private loading: LoadingService,
-  ) { }
+  ) {
+    if (localStorage.getItem('data')) {
+      this.years = ['2021', '2022', '2023', '2024']
+      this.allData = JSON.parse(localStorage.getItem('data')!)
 
-  ngOnInit() {
-    this.loading.setLoading(true)
-    forkJoin({
-      commentUsers: this.dashboard.getCommentsUsers(),
-      users: this.dashboard.getUsersParentInfo(0, 0, true)
-    }).subscribe(res => {
-      this.commentsUsers = res.commentUsers.data
-      this.allUsers = res.users.data
-      this.generateAgeGenderDistribution()
-      this.generateStateDistribution()
-      this.loadDateGenderData()
-      this.generateDistributionKgBaby()
-      this.generateTypeClothePieBar()
-      this.generateTypeEtape()
-    }).add(() => {
-      this.loading.setLoading(false)
-    })
+      this.ventas = this.years.map(year => this.allData.incomeStatement[year]['Ventas Netas']);
+      this.utilidadBruta = this.years.map(year => this.allData.incomeStatement[year]['Utilidad bruta']);
+      this.pasivoCirculante = this.years.map(year => this.allData.balanceSheet_NOassets[year]['Total Pasivo Circulante']);
+      this.activoCirculante = this.years.map(year => this.allData.balanceSheet_assets[year]['Total Activo Circulante']);
+      this.constructCharts()
+    }
   }
 
-  generateStateDistribution() {
-    const stateGroup: any = {}
-
-    this.allUsers.forEach(user => {
-      const state = user.Estado
-      const city = user.Ciudad
-      if (state == this.stateSelected) {
-        if (!stateGroup[city]) {
-          stateGroup[city] = { count: 1 }
-        } else {
-          stateGroup[city].count++
-        }
-      }
-    })
-
-    const labels = Object.keys(stateGroup).sort((a, b) => parseInt(a) - parseInt(b));
-    const labelsData = labels.map(city => stateGroup[city].count);
-
-    this.dataState = {
-      labels: labels,
-      datasets: [
-        { data: labelsData, label: 'Usuarios', backgroundColor: '#879AD1' },
-      ],
-    };
-    console.log(stateGroup);
+  chargeDataForYear(year: string) {
+    this.selectedYear = year
+    if (year == 'all') {
+      this.ventas = this.years.map(year => this.allData.incomeStatement[year]['Ventas Netas']);
+      this.utilidadBruta = this.years.map(year => this.allData.incomeStatement[year]['Utilidad bruta']);
+      this.pasivoCirculante = this.years.map(year => this.allData.balanceSheet_NOassets[year]['Total Pasivo Circulante']);
+      this.activoCirculante = this.years.map(year => this.allData.balanceSheet_assets[year]['Total Activo Circulante']);
+      this.constructCharts()
+    } else {
+      this.dataActivos = this.allData.balanceSheet_assets[year]['Total Activo Circulante']
+      this.dataVentas = this.allData.incomeStatement[year]['Ventas Netas']
+      this.dataPasivoCirculante = this.allData.balanceSheet_NOassets[year]['Total Pasivo Circulante']
+      this.dataUtilidad = this.allData.incomeStatement[year]['Utilidad bruta']
+      // this.constructCharts()}
+      this.lineChartData = []
+      this.barChartData = [
+        { data: [this.dataVentas, this.dataActivos, this.dataPasivoCirculante, this.dataUtilidad], label: 'Pesos' },
+      ];
+      this.barChartLabels = ['Ventas', 'Activo circulante', 'Pasivo circulante', 'Utilidad bruta']
+      // console.log(this.barChartData);
+    }
   }
 
-  generateDistributionKgBaby() {
-    const babyGroup: any = {
-      '-3 Kg': { count: 0 },
-      '3 - 6 Kg': { count: 0 },
-      '6 - 9 Kg': { count: 0 },
-      '9 - 12 Kg': { count: 0 },
-      '12 - 14 Kg': { count: 0 },
-      '14 - 16 Kg': { count: 0 },
-      '16 - 17 Kg': { count: 0 },
-      '17+ Kg': { count: 0 }
-    };
 
-    this.allUsers.forEach(user => {
-      const weight = user.PesoBebe
-      if (weight < 3) {
-        babyGroup['-3 Kg'].count++;
-      } else if (weight >= 3 && weight < 6) {
-        babyGroup['3 - 6 Kg'].count++;
-      } else if (weight >= 6 && weight < 9) {
-        babyGroup['6 - 9 Kg'].count++;
-      } else if (weight >= 9 && weight < 12) {
-        babyGroup['9 - 12 Kg'].count++;
-      } else if (weight >= 12 && weight < 14) {
-        babyGroup['12 - 14 Kg'].count++;
-      } else if (weight >= 14 && weight < 16) {
-        babyGroup['14 - 16 Kg'].count++;
-      } else if (weight >= 16 && weight < 17) {
-        babyGroup['16 - 17 Kg'].count++;
-      } else {
-        babyGroup['17+ Kg'].count++;
-      }
-    })
+  constructCharts() {
+    this.sumaVentas = this.ventas.reduce((total, valor) => total + valor, 0)
+    this.sumaPasivo = this.pasivoCirculante.reduce((total, valor) => total + valor, 0)
+    this.sumaActivo = this.activoCirculante.reduce((total, valor) => total + valor, 0)
+    this.sumaUtilidadBruta = this.utilidadBruta.reduce((total, valor) => total + valor, 0)
 
+    //ventas
+    this.valorInicialVentas = this.ventas[0];
+    this.valorFinalVentas = this.ventas[this.ventas.length - 1];
 
-    const labels = Object.keys(babyGroup).sort((a, b) => parseInt(a) - parseInt(b));
-    const labelsData = labels.map(weight => babyGroup[weight].count);
+    this.incrementoTotalVentas = this.valorFinalVentas - this.valorInicialVentas;
+    this.incrementoPorcentualVentas = (this.incrementoTotalVentas / this.valorInicialVentas) * 100;
+    this.restanteVentas = this.incrementoPorcentualVentas < 100 ? 100 - parseInt(this.incrementoPorcentualVentas.toFixed(2)) : 0
 
-    this.barWeightData = {
-      labels: labels,
+    // activos
+    this.valorInicialActivo = this.activoCirculante[0];
+    this.valorFinalActivo = this.activoCirculante[this.ventas.length - 1];
+
+    this.incrementoActivos = this.valorFinalActivo - this.valorInicialActivo;
+    this.incrementoPorcentualActivos = (this.incrementoActivos / this.valorInicialActivo) * 100;
+    this.restanteActivos = this.incrementoPorcentualActivos < 100 ? 100 - parseInt(this.incrementoPorcentualActivos.toFixed(2)) : 0;
+    // pasivos
+    this.valorInicialPasivo = this.pasivoCirculante[0];
+    this.valorFinalPasivo = this.pasivoCirculante[this.ventas.length - 1];
+
+    this.incrementoPasivos = this.valorFinalPasivo - this.valorInicialPasivo;
+    this.incrementoPorcentualPasivos = (this.incrementoPasivos / this.valorInicialPasivo) * 100;
+    this.restantePasivos = this.incrementoPorcentualPasivos < 100 ? 100 - parseInt(this.incrementoPorcentualPasivos.toFixed(2)) : 0
+    // bruta
+    this.valorInicialBruta = this.utilidadBruta[0];
+    this.valorFinalBruta = this.utilidadBruta[this.ventas.length - 1];
+
+    this.incrementoBruta = this.valorFinalBruta - this.valorInicialBruta;
+    this.incrementoPorcentualBruta = (this.incrementoBruta / this.valorInicialBruta) * 100;
+    this.restanteBruta = this.incrementoPorcentualBruta < 100 ? 100 - parseInt(this.incrementoPorcentualBruta.toFixed(2)) : 0
+
+    this.dataVentas = this.incrementoTotalVentas
+    this.dataPasivoCirculante = this.incrementoPasivos
+    this.dataActivos = this.incrementoActivos
+    this.dataUtilidad = this.incrementoBruta
+
+    this.doughnutChartDataVentas = {
       datasets: [
-        { data: labelsData, label: 'bebés', backgroundColor: '#879AD1' },
-      ],
-
-    };
-  }
-  generateTypeClothePieBar() {
-    const babyGroup: any = {}
-
-    this.allUsers.forEach(user => {
-      const type = user.TipoPanial
-      if (!babyGroup[type]) {
-        babyGroup[type] = { count: 0 }
-      }
-      babyGroup[type].count++
-    })
-
-    const labels = Object.keys(babyGroup).sort((a, b) => parseInt(a) - parseInt(b));
-    const labelsData = labels.map(type => babyGroup[type].count);
-
-    this.piePanialData = {
-      labels: labels,
-      datasets: [
-        {
-          data: labelsData,
-          backgroundColor: [
-            '#A08CCB',
-            '#C0C0C0'
-          ]
-        },
-      ],
-    };
-  }
-  generateTypeEtape() {
-    const babyGroup: any = {}
-
-    this.allUsers.forEach(user => {
-      const type = user.TipoEtapaBebe
-      if (!babyGroup[type]) {
-        babyGroup[type] = { count: 0 }
-      }
-      babyGroup[type].count++
-    })
-
-    const labels = Object.keys(babyGroup).sort((a, b) => parseInt(a) - parseInt(b));
-    const labelsData = labels.map(type => babyGroup[type].count);
-    const upperLabels = labels.map(label => label.toUpperCase())
-    this.piePrimericeData = {
-      labels: upperLabels,
-      datasets: [
-        {
-          data: labelsData,
-          backgroundColor: [
-            '#faaf16',
-            '#fcb7af',
-            '#ffe4e1',
-            '#b2e2f2',
-            '#baa2e2',
-            '#b232f2',
-            '#fdfaaa',
-            '#adfd96'
-          ]
-        },
-      ],
-    };
-  }
-
-  loadDateGenderData() {
-    // Inicializar arreglos para almacenar los recuentos de usuarios masculinos y femeninos para cada mes
-    const maleDataByMonth = Array(12).fill(0);
-    const femaleDataByMonth = Array(12).fill(0);
-
-    // Recorrer la lista de usuarios y contar la cantidad de usuarios masculinos y femeninos para cada mes
-    this.allUsers.forEach(user => {
-      const date = new Date(user.FechaAcceso);
-      const month = date.getMonth();
-      const gender = user.Genero;
-
-      if (gender === 'h') {
-        maleDataByMonth[month]++;
-      } else if (gender === 'm') {
-        femaleDataByMonth[month]++;
-      }
-    });
-    this.lineDateGenderData = {
-      datasets: [
-        {
-          data: maleDataByMonth,
-          label: 'Hombre',
-          backgroundColor: 'rgba(80,80,255,0.2)',
-          borderColor: 'rgba(80,80,255,1)',
-          pointBackgroundColor: 'rgba(148,159,177,1)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgba(80,80,255,0.8)',
-          fill: 'origin',
-        },
-        {
-          data: femaleDataByMonth,
-          label: 'Mujer',
-          backgroundColor: 'rgba(255,2,200,0.2)',
-          borderColor: 'rgba(255,2,200,1)',
-          pointBackgroundColor: 'rgba(77,83,96,1)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgba(255,2,200,0.8)',
-          fill: 'origin',
-        },
-      ],
-      labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-    };
-  }
-
-  generateAgeGenderDistribution() {
-    const ageGroups: any = {
-      '18-20': { male: 0, female: 0, other: 0, no: 0 },
-      '21-30': { male: 0, female: 0, other: 0, no: 0 },
-      '31-40': { male: 0, female: 0, other: 0, no: 0 },
-      '41-50': { male: 0, female: 0, other: 0, no: 0 },
-      '51-60': { male: 0, female: 0, other: 0, no: 0 },
-      '61-70': { male: 0, female: 0, other: 0, no: 0 },
-      '71+': { male: 0, female: 0, other: 0, no: 0 }
-    };
-
-    this.allUsers.forEach(user => {
-      const age = this.calculateAge(user.Edad);
-      let ageGroup;
-      if (age <= 20) {
-        ageGroup = '18-20';
-      } else if (age <= 30) {
-        ageGroup = '21-30';
-      } else if (age <= 40) {
-        ageGroup = '31-40';
-      } else if (age <= 50) {
-        ageGroup = '41-50';
-      } else if (age <= 60) {
-        ageGroup = '51-60';
-      } else if (age <= 70) {
-        ageGroup = '61-70';
-      } else {
-        ageGroup = '71+';
-      }
-
-      if (user.Genero == 'h') {
-        ageGroups[ageGroup].male++;
-      } else if (user.Genero == 'm') {
-        ageGroups[ageGroup].female++;
-      } else if (user.Genero == 'o') {
-        ageGroups[ageGroup].other++;
-      } else {
-        ageGroups[ageGroup].no++;
-      }
-    });
-
-    const labels = Object.keys(ageGroups);
-    const maleData = labels.map(ageGroup => ageGroups[ageGroup].male);
-    const femaleData = labels.map(ageGroup => ageGroups[ageGroup].female);
-    const otherData = labels.map(ageGroup => ageGroups[ageGroup].other);
-    const noData = labels.map(ageGroup => ageGroups[ageGroup].no);
-
-    this.dataGenereAge = {
-      labels: labels,
-      datasets: [
-        { data: maleData, label: 'Hombres' },
-        { data: femaleData, label: 'Mujeres' },
-        { data: otherData, label: 'Otro' },
-        { data: noData, label: 'Prefirió no decir' }
+        { data: [parseInt(this.incrementoPorcentualVentas.toFixed(2)), this.restanteVentas], backgroundColor: [this.determineColor(this.incrementoPorcentualVentas), '#D9D9D9'] }
       ]
     };
-
-    return ageGroups;
+    this.doughnutChartDataActivo = {
+      datasets: [
+        { data: [parseInt(this.incrementoPorcentualActivos.toFixed(2)), this.restanteActivos], backgroundColor: [this.determineColor(this.incrementoPorcentualActivos), '#D9D9D9'] }
+      ]
+    };
+    this.doughnutChartDataPasivo = {
+      datasets: [
+        { data: [parseInt(this.incrementoPorcentualPasivos.toFixed(2)), this.restantePasivos], backgroundColor: [this.determineColor(this.incrementoPorcentualPasivos), '#D9D9D9'] }
+      ]
+    };
+    this.doughnutChartDataBruto = {
+      datasets: [
+        { data: [parseInt(this.incrementoPorcentualBruta.toFixed(2)), this.restanteBruta], backgroundColor: [this.determineColor(this.incrementoPorcentualBruta), '#D9D9D9'] }
+      ]
+    };
+    this.lineChartData = [
+      { data: this.activoCirculante, label: 'Activo Circulante', type: 'line', fill: false, borderColor: '#F5D300 ' },
+      { data: this.utilidadBruta, label: 'Utilidad Bruta', type: 'line', fill: false, borderColor: '#FF6F61 ' },
+      { data: this.pasivoCirculante, label: 'Pasivo Circulante', type: 'line', fill: false, borderColor: '#40E0D0 ' },
+    ];
+    this.barChartLabels = ['2021', '2022', '2023', '2024'];
+    this.barChartData = [
+      { data: this.ventas, label: 'Ventas' },
+    ];
   }
 
-  calculateAge(birthday: string): number {
-    const today = new Date();
-    const birthDate = new Date(birthday);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
+  ngOnInit() {
+    // this.loading.setLoading(true)
+
+  }
+
+  determineColor(incremento: number) {
+    return incremento >= 0 ? this.positiveColor : this.negativeColor;
+  };
+
+
+  changeValues(type: number) {
+
+    if (type == 0) {
+      this.dataActivos = this.incrementoActivos
     }
-    return age;
+
   }
 
-  onStateChange(ev: any) {
-    this.stateSelected = ev.target.value;
-    this.generateStateDistribution()
+  getRandomNumber(): number {
+    return Math.floor(Math.random() * (10000 - 1000 + 1)) + 1000;
   }
+
+
 }

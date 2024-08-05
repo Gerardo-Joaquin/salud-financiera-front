@@ -1,13 +1,17 @@
 @import '../../../../styles.scss';
 
 .row {
-    background: linear-gradient($primary-color, $primary-dark-color);
+    background: $color-400;
     height: 100vh;
     color: white;
     overflow-y: scroll;
-
+    width: 265px;
+    transition: all 0.6s ease-out;
     &::-webkit-scrollbar {
         display: none;
+    }
+    &.close {
+        width: 0;
     }
 }
 
@@ -25,7 +29,7 @@
 .secction {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     padding: 10px 50px 10px 30px;
     border-radius: 10px;
     transition: all 0.5s ease;
@@ -37,12 +41,12 @@
     }
 
     p {
-        font-size: 18px;
+        font-size: 16px;
         margin: 0;
     }
 
     i {
-        font-size: 21px;
+        font-size: 16px;
     }
 }
 
@@ -53,5 +57,23 @@
     &:hover {
         background: white;
         color: black;
+    }
+}
+
+.select-emp {
+    border: none;
+    box-shadow: none;
+}
+
+.title {
+    position: relative;
+    .menu {
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+        i {
+            font-size: 1.5rem;
+        }
     }
 }

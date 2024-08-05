@@ -15,14 +15,8 @@ export class DashboardService {
     private global: GlobalService,
   ) { }
 
-  getCommentsUsers(): Observable<any> {
-    return this.http.get(`${this.global.ENDPOINT}/dashboard/comments_users`)
-  }
-  getUsersParentInfo(skip: number = 0, limit: number = 10, allData: boolean = false): Observable<any> {
-    return this.http.get(`${this.global.ENDPOINT}/dashboard/user-parents?skip=${skip}&limit=${limit}&all_data=${allData}`)
-  }
-  getUsersParentQuestions(skip: number = 0, limit: number = 10): Observable<any> {
-    return this.http.get(`${this.global.ENDPOINT}/dashboard/question-parents?skip=${skip}&limit=${limit}`)
+  chargeFile(fd: FormData): Observable<any> {
+    return this.http.post(`${this.global.ENDPOINT}/upload-file`,fd)
   }
 
   getActualRoute(): string {

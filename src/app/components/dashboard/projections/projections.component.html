@@ -1,0 +1,96 @@
+<div class="container-fluid p-4">
+    <div class="row card-custom justify-content-center">
+        <div class="col-12 px-4 py-1" style="margin-bottom: 2px;">
+            <div class="header">
+                <h4 class="title" style="font-weight: bold;">
+                    Proyecciones
+                </h4>
+                <p class="category">
+                    Información sobre proyecciones a futuro de la empresa
+                </p>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="row justify-content-center">
+                <div class="col-12 col-xxl-8 ">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">
+                                Históricas mas proyectadas
+                            </h4>
+                            <p class="category">
+                                Proyecciones para ventas, Utilidad bruta y EbitDA donde <b style="color: #1b485e">(2025
+                                    y 2026)</b> son las fechas proyectadas
+                            </p>
+                            <div ngbDropdown class="d-inline-block mx-3">
+                                <button type="button" class="btn btn-outline-primary" id="dropdownBasic1"
+                                    ngbDropdownToggle>
+                                    Tipo
+                                </button>
+                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                    <button ngbDropdownItem (click)="updateChart('Ventas Netas')">Ventas netas</button>
+                                    <button ngbDropdownItem (click)="updateChart('Utilidad bruta')">Utilidad
+                                        bruta</button>
+                                    <button ngbDropdownItem (click)="updateChart('EbitDA')">EbitDA</button>
+                                    <button ngbDropdownItem (click)="generateChart()">Todo</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <canvas baseChart [datasets]="barChartAllData" [labels]="barChartAllLabels"
+                                [options]="barChartOptions" [legend]="true" [type]="'bar'">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-4 conclusion p-5">
+                    <div class="header w-100">
+                        <h3>Comentarios</h3>
+                        <div class="coment mt-3" style="border-bottom: 1px solid rgba(128, 128, 128, 0.219);">
+                            <div class="user">
+                                <div class="user-image">G</div>
+                                <span class="user-name d-flex flex-column">
+                                    <span class="d-flex align-items-center">Gerardo <span class="text-muted mx-2"
+                                            style="font-size: 10px;">04/07/2024</span></span>
+                                    <span class="mt-1">Esta gráfica marca una tendencia </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="coment mt-3" style="border-bottom: 1px solid rgba(128, 128, 128, 0.219);">
+                            <div class="user">
+                                <div class="user-image">A</div>
+                                <span class="user-name d-flex flex-column">
+                                    <span class="d-flex align-items-center">Alonso <span class="text-muted mx-2"
+                                            style="font-size: 10px;">04/07/2024</span></span>
+                                    <span class="mt-1">Esta gráfica es buena </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment-input w-100">
+                        <input type="text" class="form-control" placeholder="Escribe un comentario">
+                        <i class="bi bi-chat-left-text"></i>
+                    </div>
+                </div> -->
+            </div>
+            <!-- <div class="col-12 mt-3">
+                <div class="table-container">
+                    <table class="dupont-table">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">RENTABILIDAD</th>
+                                <th *ngFor="let header of data.headers">{{ header }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let row of data.rows" (click)="selectIndice(row)">
+                                <td>{{ row.name }}</td>
+                                <td *ngFor="let value of row.values">{{ value }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>

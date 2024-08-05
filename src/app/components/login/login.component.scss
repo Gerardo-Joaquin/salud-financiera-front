@@ -20,16 +20,16 @@
     justify-content: center;
   }
   .color-primary {
-    background: $primary-color
+    background: $color-400;
   }
  
 .btn-custom {
   background: transparent;
-  border: 2px solid $primary-color ;
-  color: $primary-color;
+  border: 2px solid $color-500 ;
+  color: $color-500;
   font-weight: bold;
   &:active {
-    background: $primary-color;
+    background: $color-500;
     color: white;
   }
 }

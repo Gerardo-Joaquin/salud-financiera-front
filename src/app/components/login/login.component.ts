@@ -31,21 +31,29 @@ export class LoginComponent implements OnInit {
   }
 
   authenticate() {
-    console.log(this.authForm.value);
     if (this.authForm.valid) {
       this.loading = true;
-      this.auth.loginUser(this.authForm.value).subscribe((data: any) => {
-        if (!data['error']) {
-          console.log(data);
-          localStorage.setItem('user-session', JSON.stringify(data['data']))
-          localStorage.setItem('user-token', JSON.stringify(data['token']))
-          console.log(data['data']);
-          this.router.navigateByUrl('/dashboard')
-        } else {
-          this.ts.warning(data['data'])
-          console.log(data['data']);
-        }
-      }).add(() => this.loading = false)
+      const data = {
+        data: {
+          'username': this.authForm.get('mail'),
+          'name': 'Gerardo Joaquin',
+        },
+        token: 'token-example'
+      }
+      localStorage.setItem('user-session', JSON.stringify(data['data']))
+      localStorage.setItem('user-token', JSON.stringify(data['token']))
+      this.router.navigateByUrl('/dashboard')
+      // this.auth.loginUser(this.authForm.value).subscribe((data: any) => {
+      //   if (!data['error']) {
+      //     console.log(data);
+      //     localStorage.setItem('user-session', JSON.stringify(data['data']))
+      //     localStorage.setItem('user-token', JSON.stringify(data['token']))
+      //     this.router.navigateByUrl('/dashboard')
+      //   } else {
+      //     this.ts.warning(data['data'])
+      //     console.log(data['data']);
+      //   }
+      // }).add(() => this.loading = false)
     } else {
       this.ts.error('Ingresa los datos correctos')
     }

@@ -1,6 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
-$primary-color: #879AD1;
-$primary-dark-color: #667294;
+$primary-color: #58c45b;
+$primary-color-2: #3cb3405e;
+$primary-color-pasivo: #c21e1e;
+$primary-color-bruta: #4c7faf;
+$primary-dark-color: #2d9230;
 
 $secondary-color: #D9D9D9;
 
@@ -8,66 +11,206 @@ $text-color: #D9D9D9;
 $hover-text-color: #8d8d8d;
 
 
+$color-500-transparent: #1382a756;
+$color-50: #edfcfe;
+$color-100: #d2f5fb;
+$color-200: #90e3f4;
+$color-300: #70d8f0;
+$color-400: #2fbee1;
+$color-500: #13a1c7;
+$color-600: #1381a7;
+$color-700: #166788;
+$color-800: #1b556f;
+$color-900: #1b485e;
+$color-950: #0c2e40;
+
+.btn-outline-primary {
+  border: 1px solid $color-500;
+  color: $color-500;
+
+  &:hover {
+    border: 1px solid $color-500;
+    background: $color-500;
+    color: white;
+  }
+
+  &:active,
+  &:focus {
+    background-color: $color-500;
+    color: white;
+  }
+}
+
+.btn-primary {
+  background: $color-500;
+  color: white;
+  border: 1px solid $color-500;
+
+  &:hover {
+    border: 1px solid $color-600;
+    background: $color-600;
+    color: white;
+  }
+
+  &:active,
+  &:focus {
+    background-color: $color-500;
+    color: white;
+  }
+}
+
 //scroll chat
 .scroll-down-animation {
-    animation: scrollDown 0.5s ease-in-out;
+  animation: scrollDown 0.5s ease-in-out;
+}
+
+@keyframes scrollDown {
+  from {
+    /* Establece la posición inicial del scroll */
+    transform: translateY(0);
   }
-  
-  @keyframes scrollDown {
-    from {
-      /* Establece la posición inicial del scroll */
-      transform: translateY(0);
-    }
-    to {
-      /* Establece la posición final del scroll */
-      transform: translateY(100%);
-    }
+
+  to {
+    /* Establece la posición final del scroll */
+    transform: translateY(100%);
   }
+}
 
 
 // global styles
 
-.user-info {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 100px;
-    transition: all 0.5s ease;
-    &:hover {
-        background: $primary-color;
-    }
-    &-image {
-        margin-right: 20px;
-        height: 30px;
-        width: 30px;
-        color: $primary-color;
-        background: $secondary-color;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 10000px;
-    }
-}
-
-
-.form-control {
+.title-chart-card {
+  font-size: 20px;
   font-weight: 300;
-  font-size: 14px;
-  height: 40px;
+  padding: 10px;
 }
-.form-group{
-  label {
-    font-weight: 500;
-    font-size: 15px;
-    color: gray;
-  }
+
+.chart-container {
+  width: 100px;
+  height: 100px;
 }
+
+.card-custom {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background: white;
+  border: none;
+  border-radius: 10px;
+  margin-bottom: 20px;
+
+}
+
+.title {
+  font-weight: 300;
+  letter-spacing: 2px;
+
+}
+
+.category {
+  font-weight: 300;
+  color: gray;
+}
+
 .card {
   border: none;
+  padding: 20px;
 }
+
+.card-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 200px;
+  width: 300px;
+  border-radius: 20px;
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+  .title {
+    color: rgb(85, 85, 85);
+  }
+
+  .total {
+    font-size: 30px;
+    font-weight: bold;
+  }
+
+}
+
 body {
   font-family: 'Roboto';
   height: 100vh;
+}
+
+.table-container {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+  // max-height: 300px;
+  // overflow: scroll;
+}
+
+.dupont-table {
+  width: 100%;
+  // border-collapse: collapse;
+  color: #1f1e1e;
+  border-radius: 10px; /* Overall border-radius for the table */
+}
+
+.dupont-table th, .dupont-table td {
+  border: 1px solid #FFFFFF;
+  padding: 8px;
+  text-align: center;
+}
+
+.dupont-table th {
+  background-color: #2fbee1;
+  color: white;
+  position: sticky;
+  top: 0;
+  /* Remove border-radius from here */
+}
+
+.dupont-table thead th:first-child {
+  border-top-left-radius: 10px;
+}
+
+.dupont-table thead th:last-child {
+  border-top-right-radius: 10px;
+}
+
+.dupont-table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+
+.dupont-table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}
+
+.dupont-table tbody tr:nth-child(odd) {
+  cursor: pointer;
+  background-color: #d6dee6;
+}
+
+.dupont-table tbody tr:nth-child(odd):hover {
+  background-color: #b4bcc5;
+}
+
+.dupont-table tbody tr:nth-child(even) {
+  cursor: pointer;
+  background-color: #bebfc0;
+}
+
+.dupont-table tbody tr:nth-child(even):hover {
+  background-color: rgb(147, 159, 173);
+}
+
+
+.table-scroll {
+  max-height: 40vh;
+  overflow: auto;
 }

@@ -1,5 +1,5 @@
-import { ApplicationConfig } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { ApplicationConfig, NgModule } from '@angular/core';
+import { provideRouter, withHashLocation } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
@@ -14,11 +14,11 @@ export const appConfig: ApplicationConfig = {
   providers: [
     DashboardService,
     LoginService,
-    provideRouter(routes), 
+    provideRouter(routes, withHashLocation()), 
     provideClientHydration(),
     provideHttpClient(),
     provideCharts(withDefaultRegisterables()),
     provideAnimations(),
-    provideToastr()
+    provideToastr(),
   ]
 };

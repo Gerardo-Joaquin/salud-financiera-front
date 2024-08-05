@@ -13,11 +13,5 @@ export class LoginService {
     private globalService: GlobalService,
 
   ) { }
-  loginUser(body: any): Observable<any> {
-    return this.http.post(`${this.globalService.ENDPOINT}/user/auth`,body)
-  }
 
-  validateAccessToken(body: string): Observable<any> {
-    return this.http.post(`${this.globalService.ENDPOINT}/user/validate_access_token`, body)
-  }
 }

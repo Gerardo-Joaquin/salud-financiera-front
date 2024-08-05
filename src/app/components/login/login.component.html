@@ -2,20 +2,17 @@
     <div class="row justify-content-center mt-5">
         <div class="col-12">
             <div class="card">
-                <div class="col-12 img">
-                    <img src="assets/bbtips-logo.webp" alt="">
-                </div>
                 <div class="card-header color-primary text-white mt-3">
                     <h4 class="text-center p-0 m-0">Inicio de Sesión</h4>
                 </div>
                 <div class="card-body mt-3 p-0">
                     <form [formGroup]="authForm" class="row">
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             <label for="exampleInputEmail1">Correo Electrónico</label>
                             <input formControlName="mail" type="email" class="form-control" id="exampleInputEmail1"
                                 aria-describedby="emailHelp" placeholder="Ingresa tu correo electrónico">
                         </div>
-                        <div class="form-group mt-3">
+                        <div class="form-group mt-3 mb-3">
                             <label for="exampleInputPassword1">Contraseña</label>
                             <input formControlName="pass" type="password" class="form-control"
                                 id="exampleInputPassword1" placeholder="Contraseña">

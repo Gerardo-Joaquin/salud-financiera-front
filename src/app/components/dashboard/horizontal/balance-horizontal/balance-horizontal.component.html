@@ -1,0 +1,79 @@
+<div class="row justify-content-center">
+    <div class="col-12 col-xxl-8 mt-3">
+        <div class="card">
+            <div class="header">
+                <h4 class="title">
+                    Balance general
+                </h4>
+                <p class="category">
+                    Muestra información sobre los porcentajes de balance general
+                </p>
+            </div>
+            <div class="content">
+                <canvas baseChart [datasets]="barChartAllData"
+                    [labels]="barChartAllLabels" [options]="barChartOptions" [legend]="true" [type]="'bar'">
+                </canvas>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="col-4 conclusion p-5">
+        <div class="header w-100">
+            <h3>Comentarios</h3>
+            <div class="coment mt-3" style="border-bottom: 1px solid rgba(128, 128, 128, 0.219);">
+                <div class="user">
+                    <div class="user-image">G</div>
+                    <span class="user-name d-flex flex-column">
+                        <span class="d-flex align-items-center">Gerardo <span class="text-muted mx-2"
+                                style="font-size: 10px;">04/07/2024</span></span>
+                        <span class="mt-1">Esta gráfica marca una tendencia </span>
+                    </span>
+                </div>
+            </div>
+            <div class="coment mt-3" style="border-bottom: 1px solid rgba(128, 128, 128, 0.219);">
+                <div class="user">
+                    <div class="user-image">A</div>
+                    <span class="user-name d-flex flex-column">
+                        <span class="d-flex align-items-center">Alonso <span class="text-muted mx-2"
+                                style="font-size: 10px;">04/07/2024</span></span>
+                        <span class="mt-1">Esta gráfica es buena </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="comment-input w-100">
+            <input type="text" class="form-control" placeholder="Escribe un comentario">
+            <i class="bi bi-chat-left-text"></i>
+        </div>
+    </div> -->
+</div>
+<div class="col-12 mt-3 table-scroll">
+    <div class="table-container">
+        <table class="dupont-table">
+            <thead>
+                <tr>
+                    <th>Concepto</th>
+                    <ng-container *ngFor="let year of years">
+                        <th colspan="2">{{ year }}</th>
+                    </ng-container>
+                </tr>
+                <tr>
+                    <th></th>
+                    <ng-container *ngFor="let year of years">
+                        <th>Valor</th>
+                        <th>%</th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let concept of concepts; let i = index" (click)="selectConcept(concept)">
+                    <td>{{ concept }}</td>
+                    <ng-container *ngFor="let year of years">
+                        <td>{{ formatNumber(financialData[year][concept]) }}</td>
+                        <td>{{ formatPercent(financialData[year + ' (%)'][concept]) }}</td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

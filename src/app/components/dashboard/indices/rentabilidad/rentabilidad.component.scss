@@ -1,0 +1,128 @@
+.conclusion {
+    position: relative;
+    margin-top: 70px;
+    height: 50vh;
+    background: #edfcfe;
+    border-radius: 20px;
+    box-shadow: inset -6px 10px 15px -3px #1668881c;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+  
+    h3 {
+      font-weight: bold;
+    }
+  
+    input {
+      border: none;
+      box-shadow: none;
+    }
+  
+  }
+  .user {
+    display: flex;
+    align-items: start;
+  
+  
+  }
+  .user-image {
+    margin-right: 10px;
+    width: 30px;
+    color: white;
+    height: 30px;
+    background: #13a1c7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100px;
+  }
+  .comment-data {
+    margin-left: 20%;
+  }
+  
+  .comment-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    padding: 5px;
+    border-radius: 5px;
+  
+    input {
+      border-radius: 5px;
+      background: transparent;
+      width: 90%;
+      margin-right: 20px;
+    }
+  
+    i {
+      font-size: 23px;
+      margin-right: 10px;
+      color: rgba(102, 102, 102, 0.295);
+    }
+  }
+  
+  
+  
+  .table-container {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .dupont-table {
+    width: 100%;
+    // max-width: 800px;
+    border-collapse: collapse;
+    color: #1f1e1e;
+    border-radius: 10px; /* Overall border-radius for the table */
+    overflow: hidden; /* Ensures rounded corners show up */
+  }
+  
+  .dupont-table th, .dupont-table td {
+    border: 1px solid #FFFFFF;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .dupont-table th {
+    background-color: #2fbee1;
+    /* Remove border-radius from here */
+  }
+  
+  .dupont-table thead th:first-child {
+    border-top-left-radius: 10px;
+  }
+  
+  .dupont-table thead th:last-child {
+    border-top-right-radius: 10px;
+  }
+  
+  .dupont-table tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+  }
+  
+  .dupont-table tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+  }
+  
+  .dupont-table tbody tr:nth-child(odd) {
+    cursor: pointer;
+    background-color: #d6dee6;
+  }
+  
+  .dupont-table tbody tr:nth-child(odd):hover {
+    background-color: #b4bcc5;
+  }
+  
+  .dupont-table tbody tr:nth-child(even) {
+    cursor: pointer;
+    background-color: #bebfc0;
+  }
+  
+  .dupont-table tbody tr:nth-child(even):hover {
+    background-color: rgb(147, 159, 173);
+  }

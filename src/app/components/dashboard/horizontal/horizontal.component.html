@@ -1,0 +1,37 @@
+<div class="container-fluid p-4">
+    <div class="row card-custom justify-content-center">
+        <div class="col-12 px-4 py-3" style="margin-bottom: 2px;">
+            <div class="header">
+                <h4 class="title" style="font-weight: bold;">
+                    Análisis horizontal
+                </h4>
+                <p class="category">
+                    Información sobre todo el análisis horizontal, separado por balance general, estado de resultados activo y pasivo
+                </p>
+            </div>
+        </div>
+        <div class="col-12 mb-2">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+                <li [ngbNavItem]="1">
+                    <button ngbNavLink style="color: #13a1c7">Balance general</button>
+                    <ng-template ngbNavContent>
+                       <app-balance-horizontal></app-balance-horizontal>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="2">
+                    <button ngbNavLink style="color: #13a1c7">Activos</button>
+                    <ng-template ngbNavContent>
+                     <app-activo-horizontal></app-activo-horizontal>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="3">
+                    <button ngbNavLink style="color: #13a1c7">Pasivos</button>
+                    <ng-template ngbNavContent>
+                     <app-pasivo-horizontal></app-pasivo-horizontal>
+                    </ng-template>
+                </li>
+            </ul>
+            <div [ngbNavOutlet]="nav" class="mt-2"></div>
+        </div>
+    </div>
+</div>

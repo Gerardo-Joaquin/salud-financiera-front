@@ -1,178 +1,128 @@
 <div class="container-fluid p-4">
-    <div class="row card-custom">
-        <div class="col-12" style="margin-bottom: 2px;">
+    <div class="row card-custom justify-content-center align-items-center">
+        <div class="col-6 px-4 py-3" style="margin-bottom: 2px;">
             <div class="header">
                 <h4 class="title" style="font-weight: bold;">
-                    PAPÁS
+                    Diagnostico rápido ({{selectedYear == 'all' ? 'Todos': selectedYear}})
                 </h4>
                 <p class="category">
-                    Información sobre los papás o usuarios, separado por genero, edad y localización
+                    Información rápida sobre la empresa
                 </p>
             </div>
         </div>
-        <div class="col-6">
-            <div class="card">
-                <div class="header">
-                    <h4 class="title">
-                        Ciudad y estado
-                    </h4>
-                    <p class="category">
-                        Gráfico de papás por ciudad y estado
-                    </p>
-                    <div class="form-group">
-                        <label class="form-label">Estado</label>
-                        <select class="form-select" [(ngModel)]="stateSelected" (change)="onStateChange($event)">
-                            <option [value]="item.state" *ngFor="let item of states">{{item.state}}</option>
-                        </select>
-                    </div>
+        <div class="col-6 text-end">
+            <!-- <div ngbDropdown class="d-inline-block">
+                <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+                    Tipo
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <button ngbDropdownItem>Porcentaje <i class="bi bi-percent"></i> </button>
+                    <button ngbDropdownItem>Pesos <i class="bi bi-currency-dollar"></i> </button>
                 </div>
-                <div class="content">
-                    <canvas baseChart [data]="dataState" [options]="barChartOptions" [type]="'bar'"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="card">
-                <div class="header">
-                    <h4 class="title">
-                        Edad
-                    </h4>
-                    <p class="category">
-                        Gráfico de usuarios por rango de edad, separados por genero
-                    </p>
-                </div>
-                <div class="content">
-                    <canvas baseChart [data]="dataGenereAge" [options]="barChartOptions" [type]="'bar'"></canvas>
+            </div> -->
+            <div ngbDropdown class="d-inline-block mx-3">
+                <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+                    Año
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <button ngbDropdownItem (click)="chargeDataForYear(item)"
+                        *ngFor="let item of years">{{item}}</button>
+                    <button ngbDropdownItem (click)="chargeDataForYear('all')">Todos</button>
                 </div>
             </div>
         </div>
-        <div class="col-md-12 mt-3">
-            <div class="card">
-                <div class="header">
-                    <h4 class="title">
-                        Genero
-                    </h4>
-                    <p class="category">
-                        Gráfico de usuarios que han usado el avatar por su genero
-                    </p>
-                </div>
-                <div class="content">
-                    <canvas baseChart class="chart" [data]="lineDateGenderData" [options]="lineChartOptions"
-                        [type]="'line'"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row card-custom">
-        <div class="col-12" style="margin-bottom: 2px;">
-            <div class="header">
-                <h4 class="title" style="font-weight: bold;">
-                    BEBÉS
-                </h4>
-                <p class="category">
-                    Información sobre los bebés, etapa, peso promedio, tipo de pañal que más usan.
-                </p>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="card">
-                <div class="header">
-                    <h4 class="title">
-                        Peso promedio de los bebés
-                    </h4>
-                    <p class="category">Gráfica de peso promedio de los bebés</p>
-
-                    <div class="content">
-                        <canvas baseChart [data]="barWeightData" [options]="barChartOptions" [type]="'bar'"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="header">
-                            <h4 class="title">Tipos de pañales </h4>
-                            <p class="category">Gráfica que muestra el tipo de panal mas usado</p>
+        <div class="col-11 mb-2">
+            <div class="row justify-content-center">
+                <div class="col-12 d-flex align-items-center justify-content-between">
+                    <div class="card-info ac">
+                        <span class="title">Activo circulante</span>
+                        <span class="total d-flex align-items-center justify-content-center">{{dataActivos |
+                            currency}}
+                            <!-- <i style="font-size: 20px; color: green;" class=" mx-2 bi bi-chevron-double-up"></i> -->
+                        </span>
+                        <span *ngIf="selectedYear =='all'" class="text-muted"
+                            style="font-size: 0.9rem;">{{incrementoPorcentualActivos.toFixed(2)}}%</span>
+                        <div *ngIf="selectedYear =='all'" class="chart-container">
+                            <canvas baseChart [data]="doughnutChartDataActivo" [type]="'doughnut'"
+                                [options]="doughnutChartOptions">
+                            </canvas>
                         </div>
-                        <div class="content">
-                            <canvas style="padding: 20px;" baseChart class="chart" [data]="piePanialData" [type]="'pie'"
-                                [options]="pieChartOptions">
+                    </div>
+                    <div class="card-info pc">
+                        <span class="title">Pasivo circulante</span>
+                        <span class="total d-flex align-items-center justify-content-center">{{dataPasivoCirculante
+                            |
+                            currency}}
+                            <!-- <i style="font-size: 20px; color: green;" class=" mx-2 bi bi-chevron-double-up"></i> -->
+                        </span>
+                        <span *ngIf="selectedYear =='all'" class="text-muted"
+                            style="font-size: 0.9rem;">{{incrementoPorcentualPasivos.toFixed(2)}}%</span>
+                        <div *ngIf="selectedYear =='all'" class="chart-container">
+                            <canvas baseChart [data]="doughnutChartDataPasivo" [type]="'doughnut'"
+                                [options]="doughnutChartOptions">
+                            </canvas>
+                        </div>
+
+                    </div>
+                    <div class="card-info ub">
+                        <span class="title">Utilidad bruta</span>
+                        <span class="total d-flex align-items-center justify-content-center">{{dataUtilidad |
+                            currency}}
+                            <!-- <i style="font-size: 20px; color: green;" class=" mx-2 bi bi-chevron-double-up"></i> -->
+                        </span>
+                        <span *ngIf="selectedYear =='all'" class="text-muted"
+                            style="font-size: 0.9rem;">{{incrementoPorcentualBruta.toFixed(2)}}%</span>
+                        <div *ngIf="selectedYear =='all'" class="chart-container">
+                            <canvas baseChart [data]="doughnutChartDataBruto" [type]="'doughnut'"
+                                [options]="doughnutChartOptions">
+                            </canvas>
+                        </div>
+                    </div>
+                    <div class="card-info ve">
+                        <span class="title">Ventas</span>
+                        <span class="total d-flex align-items-center justify-content-center">{{dataVentas |
+                            currency}}
+                            <!-- <i style="font-size: 20px; color: green;" class=" mx-2 bi bi-chevron-double-up"></i> -->
+                        </span>
+                        <span *ngIf="selectedYear =='all'" class="text-muted"
+                            style="font-size: 0.9rem;">{{incrementoPorcentualVentas.toFixed(2)}}%</span>
+                        <div *ngIf="selectedYear =='all'" class="chart-container">
+                            <canvas baseChart [data]="doughnutChartDataVentas" [type]="'doughnut'"
+                                [options]="doughnutChartOptions">
                             </canvas>
                         </div>
                     </div>
                 </div>
-
-            </div>
-        </div>
-        <div class="col-6 mt-2">
-            <div class="card">
-                <div class="header">
-                    <h4 class="title">Etapas de los bebes</h4>
-                    <p class="category">Muestra las etapas de los bebes mas comunes registradas por los papás</p>
-                </div>
-                <div class="content">
-                    <canvas style="padding: 20px;" baseChart class="chart" [data]="piePrimericeData" [type]="'pie'"
-                        [options]="pieChartOptions">
-                    </canvas>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <div class="row card-custom">
-        <div class="col-12" style="margin-bottom: 2px;">
-            <div class="header">
-                <h4 class="title" style="font-weight: bold;">
-                    FEEDBACK
-                </h4>
-                <p class="category">
-                    Feedback del usuario final, sobre el uso del avatar
-                </p>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="card">
-                <div class="header">
-                    <h4 class="title">Comentarios</h4>
-                    <p class="category">Comentarios de los usuarios en relación al servicio del avatar Eva</p>
-                </div>
-                <div class="content" style="overflow-y: scroll; height: 300px;">
-                    <div class="table-full-width">
-                        <table class="table">
-                            <thead style="position: sticky; top: 0; background: white;">
-                                <th>Comentario</th>
-                                <th>Calificación</th>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let comment of commentsUsers">
-                                    <td>{{comment.Comentario}}</td>
-                                    <td class="d-flex justify-content-center align-items-center">
-                                        <div class="star" *ngFor="let _ of [].constructor(5); let i = index">
-                                            <i class="bi"
-                                                [ngClass]="{'bi-star-fill': i < comment.Tipo, 'bi-star': i >= comment.Tipo}"></i>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="col-12 col-xxl-8 mt-3">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">
+                                Estadísticas importantes
+                            </h4>
+                            <p class="category">
+                                Estadísticas de pasivo circulante, activo circulante y utilidad bruta
+                            </p>
+                        </div>
+                        <div class="content">
+                            <canvas  baseChart
+                                [datasets]="barChartData.concat(lineChartData)" [labels]="barChartLabels"
+                                [options]="barChartOptions" [legend]="barChartLegend" [type]="'bar'">
+                            </canvas>
+                            <!-- <canvas *ngIf="selectedYear != 'all'" baseChart [datasets]="barChartData"
+                                [labels]="barChartLabels" [options]="barChartOptions" [type]="'bar'">
+                            </canvas> -->
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="header">
-                    <h4 class="title">Tipo de respuestas</h4>
-                    <p class="category">Respuestas positivas, negativas</p>
-                </div>
-                <div class="content">
-                    <canvas style="padding: 20px;" baseChart class="chart" [data]="pieChartData" [type]="'pie'"
-                        [options]="pieChartOptions">
-                    </canvas>
-                </div>
+                <!-- <div class="col-4 conclusion p-5">
+                    <i class="bi bi-bar-chart-line"></i>
+                    <h3>Análisis</h3>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo officia aliquid modi mollitia
+                        earum
+                        sunt possimus quia magnam minima, facilis, obcaecati ad unde perferendis deleniti nobis
+                        laborum
+                        placeat vitae maxime.</p>
+                </div> -->
             </div>
         </div>
     </div>
